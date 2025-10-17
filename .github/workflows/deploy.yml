@@ -9,7 +9,11 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     
-    # Define as permissões para que o Action possa fazer o deploy para Pages
+    # ADICIONE ISTO: Define o ambiente de deploy
+    environment:
+      name: github-pages  # Nome do ambiente padrão para Pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
     permissions:
       contents: read
       pages: write
