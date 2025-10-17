@@ -1,0 +1,45 @@
+name: Deploy Portfolio
+
+on:
+  push:
+    branches:
+      - main  # Altere para 'master' se a sua branch principal for 'master'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    # Define as permissões para que o Action possa fazer o deploy para Pages
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Use uma versão LTS estável
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project with Vite
+        run: npm run build # Este comando gera a pasta 'dist'
+
+      # Configura o ambiente de Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # Faz o deploy da pasta 'dist'
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist' # Sobe o conteúdo da pasta de build (dist)
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
