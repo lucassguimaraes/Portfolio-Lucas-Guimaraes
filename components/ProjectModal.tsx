@@ -1,6 +1,5 @@
 
 import React from 'react';
-// FIX: The 'Project' type should be imported from '../types' instead of '../constants'.
 import type { Project } from '../types';
 import { X } from 'lucide-react';
 
